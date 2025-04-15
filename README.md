@@ -58,3 +58,7 @@ Ensure the udemy_course_data.csv file is present in the root directory. This fil
 3- Access the Chatbot:
 
 Open your web browser and navigate to (https://educationalchatbot-dvpthkchgkg75ibd5ajapx.streamlit.app/) to interact with the chatbot interface.
+
+# Live DEMO
+Try out the chatbot in action here:  
+👉 [Educational Chatbot Demo](https://drive.google.com/file/d/1BlsZy7jFnmtCU1sZ8s58pJnWZ81xe_5m/view)
