@@ -8,15 +8,18 @@ from pathlib import Path
 import json
 
 
-# Ensure Firebase Admin SDK is initialized only once
-firebase_key = st.secrets["firebase"]["firebase_admin_key"]
+# Retrieve the Firebase service account key (as a string) from secrets
+firebase_key_str = st.secrets["firebase"]["firebase_admin_key"]
 
-# Write the key content to a temporary file (if needed)
-with open("firebase_service_account.json", "w") as f:
-    f.write(firebase_key)
+# Parse the JSON string to a dictionary
+try:
+    firebase_key_dict = json.loads(firebase_key_str)
+except json.JSONDecodeError as e:
+    st.error(f"Failed to parse Firebase key. Check its format: {e}")
+    st.stop()
 
-# Initialize Firebase Admin SDK with the service account key file
-cred = credentials.Certificate("firebase_service_account.json")
+# Initialize Firebase Admin SDK using the dictionary directly
+cred = credentials.Certificate(firebase_key_dict)
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
