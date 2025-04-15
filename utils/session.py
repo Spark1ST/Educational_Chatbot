@@ -9,11 +9,15 @@ import json
 
 
 # Ensure Firebase Admin SDK is initialized only once
-if not firebase_admin._apps:
-    # Path to your Firebase Admin SDK service account key
-    cred = credentials.Certificate("sd.json")
-    firebase_admin.initialize_app(cred)
+firebase_key = st.secrets["firebase"]["firebase_admin_key"]
 
+# Write the key content to a temporary file (if needed)
+with open("firebase_service_account.json", "w") as f:
+    f.write(firebase_key)
+
+# Initialize Firebase Admin SDK with the service account key file
+cred = credentials.Certificate("firebase_service_account.json")
+firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 def initialize_session_state():
