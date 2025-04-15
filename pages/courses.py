@@ -2,16 +2,19 @@ import streamlit as st
 from utils.session import load_course_data, load_user_data, update_user_progress, save_user_data
 
 def enroll_in_course(uid, course_id):
-    """Enroll user in a course using Firebase"""
     user_data = load_user_data(uid)
-    if "enrolled_courses" not in user_data:
-        user_data["enrolled_courses"] = []
+    user_data.setdefault("enrolled_courses", [])
     if course_id not in user_data["enrolled_courses"]:
         user_data["enrolled_courses"].append(course_id)
         save_user_data(uid, user_data)
 
+def get_next_module(modules, current_id):
+    for i, m in enumerate(modules):
+        if m["id"] == current_id and i + 1 < len(modules):
+            return modules[i + 1]
+    return None
+
 def show_courses(enrolled_only=False):
-    """Display course catalog"""
     if "uid" not in st.session_state:
         st.error("Please log in to access courses.")
         st.session_state.page = "auth"
@@ -56,7 +59,6 @@ def show_courses(enrolled_only=False):
                         st.rerun()
 
 def show_course_details():
-    """Display selected course details and modules"""
     if "selected_course" not in st.session_state:
         st.session_state.page = "courses"
         st.rerun()
@@ -64,8 +66,7 @@ def show_course_details():
     course = load_course_data(st.session_state.selected_course)
     if not course:
         st.error("Course not found.")
-        st.session_state.page = "courses"
-        st.rerun()
+        return
 
     st.title(course["title"])
     st.caption(f"Instructor: {course.get('instructor', 'Unknown')}")
@@ -95,11 +96,10 @@ def show_course_details():
                     st.rerun()
 
 def show_module_content(course, module_id, course_progress):
-    """Display content for a selected module"""
     module = next((m for m in course["modules"] if m["id"] == module_id), None)
     if not module:
-        st.session_state.current_module = None
-        st.rerun()
+        st.error("Module not found.")
+        return
 
     st.title(module["title"])
 
@@ -117,7 +117,12 @@ def show_module_content(course, module_id, course_progress):
                 {"completed": True}
             )
             st.success("Progress updated!")
-            st.rerun()
+
+            next_module = get_next_module(course["modules"], module["id"])
+            if next_module:
+                if st.button("Go to Next Module"):
+                    st.session_state.current_module = next_module["id"]
+                    st.rerun()
 
     elif module["content_type"] == "quiz":
         if "quiz_answers" not in st.session_state:
@@ -152,4 +157,9 @@ def show_module_content(course, module_id, course_progress):
             )
             st.success(f"You scored {score}/{total} ({percentage}%)")
             del st.session_state.quiz_answers
-            st.rerun()
+
+            next_module = get_next_module(course["modules"], module["id"])
+            if next_module:
+                if st.button("Go to Next Module"):
+                    st.session_state.current_module = next_module["id"]
+                    st.rerun()
