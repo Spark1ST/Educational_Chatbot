@@ -42,7 +42,7 @@ def show_chat_page():
 def generate_ai_response(prompt):
     try:
         response = requests.post(
-            "http://127.0.0.1:8000/generate",  # or your deployed URL
+            "edubot-production-f59c.up.railway.app:8000/generate",  # or your deployed URL
             json={"prompt": prompt, "username": st.session_state.username},
             timeout=30
         )
