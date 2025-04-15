@@ -13,7 +13,7 @@ st.set_page_config(
     page_title="QuestCourse Forge",
     page_icon="📚",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="expanded"
 )
 
 # Hide Streamlit default controls
