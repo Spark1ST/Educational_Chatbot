@@ -34,7 +34,7 @@ def check_session_state():
     """Ensure session state is properly initialized"""
     initialize_session_state()
 def verify_password(email, password):
-    API_KEY = st.secrets["FIREBASE_WEB_API_KEY"]
+    API_KEY = st.secrets["FIREBASE_API_KEY"]
     url = f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={API_KEY}"
     try:
         response = requests.post(url, json={
