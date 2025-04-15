@@ -6,11 +6,20 @@ import requests
 from datetime import datetime
 from pathlib import Path
 import json
-
+import os
 # Initialize Firebase
-if not firebase_admin._apps:
-    cred = credentials.Certificate("data/grad-51668-firebase-adminsdk-fbsvc-b04feff7eb.json")
+firebase_admin_key = os.getenv('FIREBASE_ADMIN_KEY')
+
+if firebase_admin_key:
+    # Write the secret content to a temporary file
+    with open("firebase_service_account.json", "w") as f:
+        json.dump(json.loads(firebase_admin_key), f)
+
+    # Initialize Firebase Admin SDK with the temporary file
+    cred = credentials.Certificate("firebase_service_account.json")
     firebase_admin.initialize_app(cred)
+else:
+    print("Firebase admin key not found in environment variables")
 
 db = firestore.client()
 
