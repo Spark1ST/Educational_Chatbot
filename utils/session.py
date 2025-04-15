@@ -8,7 +8,7 @@ from pathlib import Path
 import json
 import os
 # Initialize Firebase
-firebase_admin_key = os.getenv('FIREBASE_ADMIN_KEY')
+firebase_admin_key = os.getenv('FIREBASE_WEB_API_KEY')
 
 if firebase_admin_key:
     # Write the secret content to a temporary file
