@@ -1,10 +1,10 @@
 from datetime import datetime
 from firebase_admin import auth, firestore
 from fastpi.models import UserResponse, CourseResponse
-from fastpi.firebase import firebase
+from firebase_admin import credentials, firestore, auth
 
-db = firebase['db']
-auth_client = firebase['auth']
+db = firestore.client()
+auth_client = auth
 
 # User Operations
 def create_user(user: dict):
