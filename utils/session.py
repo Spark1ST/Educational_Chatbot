@@ -11,7 +11,7 @@ import json
 # Ensure Firebase Admin SDK is initialized only once
 if not firebase_admin._apps:
     # Path to your Firebase Admin SDK service account key
-    cred = credentials.Certificate("data/grad-51668-firebase-adminsdk-fbsvc-b04feff7eb.json")
+    cred = credentials.Certificate("sd.json")
     firebase_admin.initialize_app(cred)
 
 db = firestore.client()
