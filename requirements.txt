@@ -1,3 +1,6 @@
 streamlit==1.36.0
 pandas==2.2.1
 altair==5.2.0
+firebase-admin==5.0.0
+langchain==0.3.23
+crewai==0.114.0
