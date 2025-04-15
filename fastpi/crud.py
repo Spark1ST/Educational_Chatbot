@@ -1,7 +1,7 @@
 from datetime import datetime
 from firebase_admin import auth, firestore
 from fastpi.models import UserResponse, CourseResponse
-from fastpi.firebase import firebase
+#from fastpi.firebase import firebase
 
 db = firebase['db']
 auth_client = firebase['auth']
