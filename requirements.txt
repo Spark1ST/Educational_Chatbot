@@ -4,4 +4,4 @@ altair==5.2.0
 firebase-admin==5.0.0
 langchain==0.3.23
 crewai==0.114.0
-pydantic==2.8.1
+pydantic[email]==2.8.1
