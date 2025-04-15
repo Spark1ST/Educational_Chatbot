@@ -109,11 +109,10 @@ def main():
             show_admin()
         elif current_page == "dashboard":
             show_dashboard()
+        elif current_page == "course":  # ✅ Handle course detail view
+            show_course_details()
         elif current_page in ["courses", "my_learning"]:
-            if st.session_state.get("selected_course"):
-                show_course_details()
-            else:
-                show_courses(enrolled_only=(current_page == "my_learning"))
+            show_courses(enrolled_only=(current_page == "my_learning"))
         elif current_page == "chat":
             show_chat_page()
         else:
@@ -125,6 +124,7 @@ def main():
         st.error(f"Error details: {str(e)}")
         if st.button("Reload Application"):
             st.rerun()
+
 
 if __name__ == "__main__":
     main()
